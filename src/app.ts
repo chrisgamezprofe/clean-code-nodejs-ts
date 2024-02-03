@@ -1,3 +1,5 @@
+import { envs } from "./config/envs";
+import { AppRoutes } from "./presentation/routes";
 import { Server } from "./presentation/server"
 
 //TODO: función anónima auto invocada
@@ -10,7 +12,8 @@ async function main() {
     
     //todo: iniciar server
     new Server({
-        port:4200
+        port: envs.PORT,
+        routes: AppRoutes.routes
     }).start();
     
 }
