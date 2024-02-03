@@ -1,6 +1,7 @@
 import { BcryptAdapter } from "../../../config";
 import { StudentModel } from "../../../data/mongodb";
 import { CustomError, RegisterStudentDatasource, RegisterStudentDto, StudentEntity } from "../../../domain";
+import { StudentMapper } from "../../mapper/student.mapper";
 
 
 type HashPassword = (password: string) => string;
@@ -31,14 +32,7 @@ export class RegisterStudentMongoDatasourceImpl implements RegisterStudentDataso
 
             await student.save();
             
-            return new StudentEntity(
-                student.id,
-                name,
-                nationality,
-                career,
-                email,
-                student.password
-            );
+            return StudentMapper.studentEntityFromObject(student);
         } catch (error) {
             if (error instanceof CustomError) {
                 throw error;
