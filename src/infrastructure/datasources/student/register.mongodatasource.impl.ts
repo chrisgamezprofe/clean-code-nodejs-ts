@@ -3,12 +3,20 @@ import { StudentModel } from "../../../data/mongodb";
 import { CustomError, RegisterStudentDatasource, RegisterStudentDto, StudentEntity } from "../../../domain";
 
 
+type HashPassword = (password: string) => string;
+type ComparePassword = (password: string, hashed:string) => boolean;
+
 
 export class RegisterStudentMongoDatasourceImpl implements RegisterStudentDatasource{
+
+    constructor(
+        private readonly hashPassword:HashPassword = BcryptAdapter.hash,
+        private readonly comparePassword:ComparePassword = BcryptAdapter.compare
+    ){}
     async register(registerStudentDto: RegisterStudentDto): Promise<StudentEntity> {
         const { name, nationality, career, email, password } = registerStudentDto;  
         try {
-            //verificar
+
             const emailExists = await StudentModel.findOne({ email }); 
             
             if (emailExists) throw CustomError.badRequest('Email already in use');
@@ -18,7 +26,7 @@ export class RegisterStudentMongoDatasourceImpl implements RegisterStudentDataso
                 nationality,
                 career,
                 email,
-                password:BcryptAdapter.hash(password)
+                password: this.hashPassword(password)
             });
 
             await student.save();
