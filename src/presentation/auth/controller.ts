@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { RegisterStudentDto } from './../../domain/dtos/student/register-student.dto';
+import { RegisterStudentDto } from '../../domain/dtos/student/register.dto';
 
 
 

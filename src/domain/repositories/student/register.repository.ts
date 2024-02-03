@@ -1,4 +1,4 @@
-import { RegisterStudentDto } from "../../dtos/student/register-student.dto";
+import { RegisterStudentDto } from "../../dtos/student/register.dto";
 import { StudentEntity } from "../../entities/student.entity";
 
 
