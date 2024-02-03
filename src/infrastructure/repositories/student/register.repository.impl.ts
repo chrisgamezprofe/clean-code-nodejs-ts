@@ -6,7 +6,7 @@ export class RegisterStudentRepositoryImpl implements RegisterStudentRepository{
         private readonly registerStudentDatasource: RegisterStudentDatasource,
     ) { }
     
-    register(RegisterStudentDto: RegisterStudentDto): Promise<StudentEntity>{
+    run(RegisterStudentDto: RegisterStudentDto): Promise<StudentEntity>{
         return this.registerStudentDatasource.register(RegisterStudentDto);
     }
 }

@@ -1,16 +1,20 @@
 import { envs } from "./config/envs";
+import { MongoDatabase } from "./data/mongodb";
 import { AppRoutes } from "./presentation/routes";
 import { Server } from "./presentation/server"
 
-//TODO: función anónima auto invocada
+
 (() => {
     main()
 })()
 
 async function main() {
-    //todo: await base de datos
+
+    await MongoDatabase.connect({
+        dbName: envs.MONGO_DB_NAME,
+        mongoUrl: envs.MONGO_URL
+    });
     
-    //todo: iniciar server
     new Server({
         port: envs.PORT,
         routes: AppRoutes.routes

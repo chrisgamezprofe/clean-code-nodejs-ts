@@ -9,7 +9,7 @@ export class RegisterStudentDto{
         public email: string
     ) { }
     
-    static create(object: { [key: string]: any }): [string?,RegisterStudentDto?]{
+    static run(object: { [key: string]: any }): [string?,RegisterStudentDto?]{
         
         const { name,nationality,career,email} = object;  
 

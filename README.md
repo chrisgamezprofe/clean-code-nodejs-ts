@@ -51,6 +51,23 @@
         }
     }
 
+crear archivo docker-compose.yml
+version: "3.8"
+
+services:
+mongo-db:
+image: "mongo"
+restart: always
+environment:
+MONGO_INITDB_ROOT_USERNAME: mongo-user
+MONGO_INITDB_ROOT_PASSWORD: s3cr3t0
+volumes: - ./mongo:/data/db
+ports: - "27017:27017"
+
+### `docker compose up -d`
+
 Ejecutamos de nuevo
 
 ### `npm run dev`
+
+docker compose up -d

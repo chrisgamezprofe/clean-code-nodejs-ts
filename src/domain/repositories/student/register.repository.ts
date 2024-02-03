@@ -4,6 +4,6 @@ import { StudentEntity } from "../../entities/student.entity";
 
 export abstract class RegisterStudentRepository {
     
-    abstract register(registerStudentDto: RegisterStudentDto): Promise<StudentEntity>
+    abstract run(registerStudentDto: RegisterStudentDto): Promise<StudentEntity>
 
 }

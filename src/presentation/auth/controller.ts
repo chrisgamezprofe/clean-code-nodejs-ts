@@ -1,20 +1,23 @@
 import { Request, Response } from "express"
-import { RegisterStudentDto } from '../../domain/dtos/student/register.dto';
+import { RegisterStudentDto, RegisterStudentRepository } from '../../domain';
+
 
 
 
 export class AuthController{
 
-    constructor() { }
+    constructor(
+        private readonly registerStudentRepository: RegisterStudentRepository
+    ) { }
 
     registerStudent = (req: Request, res: Response) => {
-        try {
-            const [error, registerStudentDto] = RegisterStudentDto.create(req.body);
-            if (error) return res.status(400).json({ error });
-            res.status(201).json(registerStudentDto);
-        } catch (err) {
-            return res.status(400).json({ error: 'Invalid data' });
-        }
+        const [error, registerStudentDto] = RegisterStudentDto.run(req.body);
+        if (error) return res.status(400).json({ error });
+            
+
+        this.registerStudentRepository.run(registerStudentDto!)
+        .then(student => res.json(student))
+        .catch(error => res.status(500).json(error))
     }
 
     loginStudent = (re:Request, res:Response) => {
