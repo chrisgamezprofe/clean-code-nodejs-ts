@@ -1,3 +1,4 @@
+import { BcryptAdapter } from "../../../config";
 import { StudentModel } from "../../../data/mongodb";
 import { CustomError, RegisterStudentDatasource, RegisterStudentDto, StudentEntity } from "../../../domain";
 
@@ -5,7 +6,7 @@ import { CustomError, RegisterStudentDatasource, RegisterStudentDto, StudentEnti
 
 export class RegisterStudentMongoDatasourceImpl implements RegisterStudentDatasource{
     async register(registerStudentDto: RegisterStudentDto): Promise<StudentEntity> {
-        const { name, nationality, career, email } = registerStudentDto;  
+        const { name, nationality, career, email, password } = registerStudentDto;  
         try {
             //verificar
             const emailExists = await StudentModel.findOne({ email }); 
@@ -16,7 +17,8 @@ export class RegisterStudentMongoDatasourceImpl implements RegisterStudentDataso
                 name,
                 nationality,
                 career,
-                email
+                email,
+                password:BcryptAdapter.hash(password)
             });
 
             await student.save();
@@ -26,7 +28,8 @@ export class RegisterStudentMongoDatasourceImpl implements RegisterStudentDataso
                 name,
                 nationality,
                 career,
-                email
+                email,
+                student.password
             );
         } catch (error) {
             if (error instanceof CustomError) {

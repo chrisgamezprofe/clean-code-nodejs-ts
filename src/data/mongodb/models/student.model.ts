@@ -19,9 +19,14 @@ const studentSchema = new Schema({
         default:['SOFTWARE_DEVELOPMENT'],
         enum:['SOFTWARE_DEVELOPMENT','MOBILE_APPLICATION_DEVELOPMENT']
     },
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+    },
     phone: String,
     image: String,
-    age: Number
+    age: Number,
+    
 });
 
 
